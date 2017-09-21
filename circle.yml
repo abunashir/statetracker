@@ -1,6 +1,9 @@
 database:
   override:
     - bin/setup
+
 test:
   override:
     - COVERAGE=true bin/rake
+  pre:
+    - cp .sample.env .env
