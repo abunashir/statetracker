@@ -17,3 +17,7 @@ en:
 
   titles:
     application: State tracker
+
+  csv_upload:
+    create:
+      success: "Successfully created!"

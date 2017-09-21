@@ -1,0 +1,6 @@
+<h3>Upload A New CSV</h3>
+<%= simple_form_for @csv_upload do |form| %>
+  <%= form.input :csv_file, label: "CSV File" %>
+  <%= form.input :tag %>
+  <%= form.button :submit, "Upload" %>
+<% end %>

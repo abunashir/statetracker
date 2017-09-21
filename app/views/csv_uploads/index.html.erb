@@ -1,0 +1,23 @@
+<h3>CSV Uploads</h3>
+
+<table>
+  <tr>
+    <th>File Name</th>
+    <th>Uploaded At</th>
+    <th>Download Link</th>
+  </tr>
+
+  <tbody>
+    <% @csv_uploads.each do |csv_upload| %>
+      <tr>
+        <td><%= csv_upload.csv_file.file.filename %></td>
+        <td><%=  csv_upload.created_at %></td>
+        <td><%= link_to("Download", csv_upload.csv_file_url)%></td>
+      </tr>
+    <%  end %>
+  </tbody>
+</table>
+
+
+<br />
+<p><%= link_to("Upload A CSV", new_csv_upload_path) %></p>

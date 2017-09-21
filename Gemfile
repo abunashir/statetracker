@@ -2,7 +2,10 @@ source "https://rubygems.org"
 
 ruby "2.3.1"
 
+gem "carrierwave"
 gem "delayed_job_active_record"
+gem "flutie"
+gem "fog"
 gem "jquery-rails"
 gem "pg"
 gem "puma"
