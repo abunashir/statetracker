@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921084626) do
+ActiveRecord::Schema.define(version: 20170923052523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 20170921084626) do
   create_table "csv_uploads", force: :cascade do |t|
     t.string   "tag"
     t.string   "csv_file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "status",         default: 0
+    t.jsonb    "failed_imports", default: {}
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -37,4 +39,16 @@ ActiveRecord::Schema.define(version: 20170921084626) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
+  create_table "tg_objects", force: :cascade do |t|
+    t.integer  "tg_object_id"
+    t.string   "tg_object_type"
+    t.integer  "timestamp"
+    t.jsonb    "object_changes"
+    t.integer  "csv_upload_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["csv_upload_id"], name: "index_tg_objects_on_csv_upload_id", using: :btree
+  end
+
+  add_foreign_key "tg_objects", "csv_uploads"
 end

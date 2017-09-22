@@ -8,6 +8,7 @@ feature "User uploads a CSV file" do
     attach_file("CSV File", sample_csv_fixture_file)
     click_on "Upload"
 
+    expect(page).to have_content("Imported")
     expect(page).to have_content("sample.csv")
     expect(page).to have_content(I18n.t("csv_upload.create.success"))
   end
