@@ -1,4 +1,5 @@
 require "csv"
+require "json"
 require "open-uri"
 
 class CsvDataImporter
@@ -45,10 +46,10 @@ class CsvDataImporter
   def create_tg_object_from_csv(csv_row)
     TgObject.create(
       csv_upload: csv_upload,
-      timestamp: csv_row[:timestamp],
       tg_object_id: csv_row[:object_id],
+      timestamp: csv_row[:timestamp].to_i,
       tg_object_type: csv_row[:object_type],
-      object_changes: csv_row[:object_changes],
+      object_changes: JSON.parse(csv_row[:object_changes]),
     )
   end
 

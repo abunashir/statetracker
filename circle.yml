@@ -1,6 +1,7 @@
 database:
   override:
     - bin/setup
+
   pre:
     - cp .sample.env .env
 

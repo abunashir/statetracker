@@ -1,0 +1,13 @@
+<h3>Object State at <%= @state_tracker.timestamp  %></h3>
+<p>
+  <% unless @state_tracker.status.empty? %>
+    <pre><%= @state_tracker.status %></pre>
+  <% else %>
+    <%= @state_tracker.tg_object_type %>
+    <%= @state_tracker.tg_object_id %> Didn't Exist at that time.
+  <% end %>
+</p>
+
+<br />
+<%= link_to("Track another object", new_state_tracker_path) %>
+

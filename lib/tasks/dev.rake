@@ -8,5 +8,8 @@ if Rails.env.development? || Rails.env.test?
 
       # create(:user, email: "user@example.com", password: "password")
     end
+
+    desc "Create database, run migration and seed sample data"
+    task complete_build: ["db:create", "db:migrate", "db:seed"]
   end
 end
