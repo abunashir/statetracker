@@ -1,12 +1,16 @@
-<%= simple_form_for(@state_tracker, url: state_trackers_path)do |form| %>
-  <%= form.input :timestamp %>
-  <%= form.input :tg_object_id, label: "Object Id" %>
+<h3>Track an Object</h3>
 
-  <%= form.input(
-    :tg_object_type,
-    label: "Object Type",
-    collection: uniq_object_types,
-  ) %>
+<div class="col-md-6 top10">
+  <%= simple_form_for(@state_tracker, url: state_trackers_path)do |form| %>
+    <%= form.input :timestamp, as: :numeric %>
+    <%= form.input :tg_object_id, label: "Object Id", as: :numeric %>
+
+    <%= form.input(
+      :tg_object_type,
+      label: "Object Type",
+      collection: uniq_object_types,
+    ) %>
 
   <%= form.button :submit, "Track" %>
 <% end %>
+</div>

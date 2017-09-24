@@ -1,20 +1,18 @@
-<h3>CSV Uploads</h3>
+<h2>CSV Uploads</h2>
 
-<table>
+<table class="table table-bordered table-striped top10">
   <tr>
     <th>File Name</th>
     <th>Uploaded At</th>
     <th>Status</th>
-    <th>Download Link</th>
   </tr>
 
   <tbody>
     <% @csv_uploads.each do |csv_upload| %>
       <tr>
         <td><%= csv_upload.csv_file.file.filename %></td>
-        <td><%= csv_upload.created_at %></td>
+        <td><%= csv_upload.created_at.to_formatted_s(:long) %></td>
         <td><%= csv_upload.status.humanize %></td>
-        <td><%= link_to("Download", csv_upload.csv_file_url)%></td>
       </tr>
     <%  end %>
   </tbody>
@@ -23,6 +21,6 @@
 
 <br />
 <p>
-<%= link_to("Upload A CSV", new_csv_upload_path) %> <br />
-<%= link_to("Track an object", new_state_tracker_path) %>
+  <%= link_to("Upload A CSV", new_csv_upload_path, class: "btn btn-primary") %>
+  <%= link_to("Track an object", new_state_tracker_path, class: "btn btn-info") %>
 </p>
