@@ -21,8 +21,13 @@ RSpec.describe CsvDataImporter do
 
         expect(csv_upload.tg_objects.count).to eq(7)
         expect(csv_upload.status).to eq("partially_imported")
+
         expect(csv_upload.failed_imports.first["errors"]["timestamp"]).
           to(match_array(["duplicate entry for exact same object"]))
+
+        expect(
+          csv_upload.failed_imports.last["errors"]["object_changes"],
+        ).to(match_array(["Invalid JSON"]))
       end
     end
   end

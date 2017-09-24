@@ -17,8 +17,8 @@ class CsvUploadsController < ApplicationController
     @csv_upload = CsvUpload.new(csv_upload_params)
 
     if @csv_upload.save
-      CsvDataImporter.import(@csv_upload)
-      redirect_to(root_path, notice: t("csv_upload.create.success"))
+      CsvDataImporterJob.perform_later(@csv_upload)
+      redirect_to(root_path, notice: t("csv_uploads.create.success"))
     end
   end
 

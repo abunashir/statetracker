@@ -51,6 +51,8 @@ class CsvDataImporter
       tg_object_type: csv_row[:object_type],
       object_changes: JSON.parse(csv_row[:object_changes]),
     )
+  rescue JSON::ParserError
+    TgObject.new { |object| object.errors.add(:object_changes, "Invalid JSON") }
   end
 
   def csv_options

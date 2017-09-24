@@ -18,6 +18,11 @@ en:
   titles:
     application: State tracker
 
-  csv_upload:
+  csv_uploads:
+    new:
+      csv_hint:
+        "Please use object_id, object_type, timestamp and object_changes
+        as header title"
+
     create:
-      success: "Successfully created!"
+      success: "Upload created, we've enqueued a job to import those data!"

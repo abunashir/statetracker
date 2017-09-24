@@ -8,3 +8,4 @@ object_id,object_type,timestamp,object_changes
 1,Invoice,1484732821,"{""status"":""paid""}"
 1,Invoice,1484732821,"{""status"":""paid""}"
 ,Invoice,1484732821,"{""status"":""paid""}"
+121,Invoice,1484732821,"{""status"":""paid""}"""

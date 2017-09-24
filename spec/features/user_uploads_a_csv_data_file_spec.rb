@@ -1,7 +1,7 @@
 require "rails_helper"
 
-feature "User uploads a CSV file" do
-  scenario "creates a new upload with valid data" do
+feature "Uploading a CSV" do
+  scenario "with valid info imports the data properly" do
     visit root_path
     click_on "Upload A CSV"
 
@@ -10,10 +10,10 @@ feature "User uploads a CSV file" do
 
     expect(page).to have_content("Imported")
     expect(page).to have_content("sample.csv")
-    expect(page).to have_content(I18n.t("csv_upload.create.success"))
+    expect(page).to have_content(I18n.t("csv_uploads.create.success"))
   end
 
-  scenario "does not create a upload with invalid data" do
+  scenario "with invalid data does not import anything" do
     visit root_path
     click_on "Upload A CSV"
 
