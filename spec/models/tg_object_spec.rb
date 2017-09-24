@@ -39,18 +39,6 @@ RSpec.describe TgObject, type: :model do
     end
   end
 
-  describe ".find_changes" do
-    it "returns all changes for an object" do
-      old = create_tg_object(1, 10, status: "paid")
-      second_old = create_tg_object(1, 8, status: "unpaid")
-      _other = create_tg_object(1, 5, { status: "unknown" }, "Product")
-
-      expect(
-        TgObject.find_changes(1, "Order", Time.now.to_i).map(&:id),
-      ).to eq([old.id, second_old.id])
-    end
-  end
-
   def create_tg_object(id, minutes, object_changes, object_type = "Order")
     create(
       :tg_object,

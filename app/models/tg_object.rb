@@ -11,15 +11,9 @@ class TgObject < ApplicationRecord
     },
   )
 
-  def self.find_status(tg_object_id, tg_object_type, timestamp)
-    select("jsonb_object_agg(object_changes) as status").
-      from(TgObject.find_changes(tg_object_id, tg_object_type, timestamp)).
-      take.status
-  end
-
-  def self.find_changes(tg_object_id, tg_object_type, timestamp = nil)
-    where(tg_object_id: tg_object_id, tg_object_type: tg_object_type).
-      where("timestamp <= ?", (timestamp || Time.now).to_i).
-      order(timestamp: :asc)
+  def self.find_status(tg_object_id, tg_object_type, timestamp = nil)
+    select("jsonb_object_agg(object_changes order by timestamp asc) as status").
+      where(tg_object_id: tg_object_id, tg_object_type: tg_object_type).
+      where("timestamp <= ?", (timestamp || Time.now).to_i).take.status
   end
 end
