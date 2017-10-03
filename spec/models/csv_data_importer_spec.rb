@@ -13,6 +13,19 @@ RSpec.describe CsvDataImporter do
       end
     end
 
+    context "csv data with backslash" do
+      it "formats and imports data successfully" do
+        csv_upload = create_upload_with_fixture("sample-with-backslash-quote")
+
+        CsvDataImporter.import(csv_upload)
+        tg_objects = csv_upload.tg_objects
+
+        expect(tg_objects.count).to eq(2)
+        expect(csv_upload.status).to eq("imported")
+        expect(tg_objects.last.object_changes["name"]).to eq("Chris springs")
+      end
+    end
+
     context "with some invalid data" do
       it "partially import the valid csv data" do
         csv_upload = create_upload_with_partial_valid_data
@@ -33,10 +46,14 @@ RSpec.describe CsvDataImporter do
   end
 
   def create_upload_with_partial_valid_data
+    create_upload_with_fixture("sample-partial")
+  end
+
+  def create_upload_with_fixture(csv_filename, ext = "csv")
     create(
       :csv_upload,
       csv_file: Rack::Test::UploadedFile.new(
-        Rails.root.join("spec", "fixtures", "sample-partial.csv")
+        Rails.root.join("spec", "fixtures", [csv_filename, ext].join("."))
       )
     )
   end

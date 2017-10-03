@@ -22,13 +22,28 @@ class CsvDataImporter
   attr_reader :csv_upload, :failed_imports
 
   def import_objects_from_csv
-    CSV.new(open(csv_file_path), csv_options).each do |csv_row|
-      tg_object = create_tg_object_from_csv(csv_row)
+    headers = []
+    open(csv_file_path) do |file|
+      file.each_line do |csv_line|
+        csv_row = CSV.parse(csv_line.gsub('\\"','""')).first
 
-      unless tg_object.persisted?
-        csv_row[:errors] = tg_object.errors
-        @failed_imports.push(csv_row.to_h)
+        if headers.empty?
+          headers = csv_row.map(&:downcase).map(&:to_sym)
+          next
+        end
+
+        csv_row = Hash[headers.zip(csv_row)]
+        persist_csv_row_to_tg_objects(csv_row)
       end
+    end
+  end
+
+  def persist_csv_row_to_tg_objects(csv_row)
+    tg_object = create_tg_object_from_csv(csv_row)
+
+    unless tg_object.persisted?
+      csv_row[:errors] = tg_object.errors
+      @failed_imports.push(csv_row.to_h)
     end
   end
 
@@ -53,10 +68,6 @@ class CsvDataImporter
     )
   rescue JSON::ParserError
     TgObject.new { |object| object.errors.add(:object_changes, "Invalid JSON") }
-  end
-
-  def csv_options
-    { headers: true, header_converters: [:downcase, :symbol] }
   end
 
   def csv_file_path
