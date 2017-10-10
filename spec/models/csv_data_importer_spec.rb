@@ -43,6 +43,17 @@ RSpec.describe CsvDataImporter do
         ).to(match_array(["Invalid JSON"]))
       end
     end
+
+    context "with invalid csv data" do
+      it "marks the csv upload as invalid format" do
+        csv_upload = create_upload_with_fixture("invalid-format")
+
+        CsvDataImporter.import(csv_upload)
+
+        expect(csv_upload.tg_objects.count).to eq(0)
+        expect(csv_upload.status).to eq("invalid_format")
+      end
+    end
   end
 
   def create_upload_with_partial_valid_data

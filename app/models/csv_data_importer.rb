@@ -11,6 +11,8 @@ class CsvDataImporter
   def import
     import_objects_from_csv
     update_csv_upload_status
+  rescue CSV::MalformedCSVError
+    csv_upload.update(status: :invalid_format)
   end
 
   def self.import(csv_upload)
